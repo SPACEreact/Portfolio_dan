@@ -1,0 +1,13 @@
+const works=[{"title":"Carbon","type":"Film","file":null,"id":"1knbE5e8yE6oCTaMO0hU7Y_EQeVkZcLZ7"},{"title":"Brief to screen","type":"End-to-end ad","file":"video1","id":"1Mb7G8DPlF5cxDS1MDIlR03rOCjRg1oCx"},{"title":"A good ad","type":"Advertising","file":"video2","id":"1nzP2Jsuf9daHrO3XwLVqWNLxEZXwCdde"},{"title":"Basic but punchy","type":"Advertising","file":"video3","id":"15EOTs3TkXXeOxp-Wk0sTx5DTB8eyKTnW"},{"title":"Basic ad","type":"Advertising","file":"video4","id":"1fVhC4vsrbuekW6HipOqlNihd3Pc0yBvj"},{"title":"Movie concept","type":"Film experiment","file":"video5","id":"1m6-M2k4b-96RM-_OCu9a0tmhYy0GjwO4"},{"title":"Adosphere","type":"Advertising","file":"video6","id":"1oZmQAzuNfYvZG2cfkSLLrGPeJA0GYNFk"},{"title":"Movie test","type":"Film experiment","file":"video7","id":"1UhQU666xmVkwtOC1AvU2RK5HefP6Vgc7"},{"title":"Motion transfer","type":"Motion experiment","file":"video8","id":"1s0m0RGFkmOaAm5C8XQ-uJ2UVRF3c1lK_"}];
+const grid=document.getElementById('work');
+works.forEach((work,i)=>{
+ const card=document.createElement('article');card.className='card';
+ const frame=document.createElement('div');frame.className='video-frame';
+ if(work.file){const button=document.createElement('button');button.className='video-cover';button.dataset.id=work.id;button.setAttribute('aria-label','Play '+work.title);
+ const image=document.createElement('img');image.src=work.file+'.jpg';image.alt=work.title+' video still';image.loading='lazy';const label=document.createElement('span');label.className='play-label';label.textContent='▶ Play video';button.append(image,label);frame.append(button);}
+ else{frame.append(makePlayer(work.id,work.title))}
+ card.append(frame);const caption=document.createElement('div');caption.className='caption';const title=document.createElement('h2');title.textContent=work.title;const type=document.createElement('span');type.textContent=String(i+2).padStart(2,'0')+' / '+work.type;caption.append(title,type);card.append(caption);
+ const link=document.createElement('a');link.href='https://drive.google.com/file/d/'+work.id+'/view';link.target='_blank';link.rel='noopener';link.className='drive-link';link.textContent='Open in Drive';card.append(link);grid.append(card);
+});
+function makePlayer(id,title){const iframe=document.createElement('iframe');iframe.src='https://drive.google.com/file/d/'+id+'/preview';iframe.title=title+' — video player';iframe.loading='lazy';iframe.allow='autoplay; fullscreen';iframe.allowFullscreen=true;return iframe}
+document.addEventListener('click',event=>{const button=event.target.closest('.video-cover');if(button)button.replaceWith(makePlayer(button.dataset.id,button.getAttribute('aria-label').replace(/^Play /,'')))});
