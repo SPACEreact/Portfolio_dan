@@ -87,3 +87,15 @@
 @media(max-width:650px){.pixel-interlude{min-height:95vh;margin-top:50px}.studio-sticky{top:8vh}.studio-top{display:block}.studio-top>span{display:block;margin-top:12px}.studio-stage{height:310px;border-width:5px;border-radius:20px}.studio-caption{max-width:290px}}
 @media(prefers-reduced-motion:reduce){.pixel-interlude{min-height:0}.studio-sticky{position:relative;top:auto}.scene-layer{will-change:auto}}
 
+
+/* Authorship and professional context beside the work. */
+.work-credit{font-size:12px;line-height:1.6;color:#494251;margin:12px 5px 0;border-top:1px solid #29243124;padding-top:11px}
+.production-note{display:grid;grid-template-columns:1.15fr 1fr;gap:40px;align-items:center;padding:29px 0;margin-top:30px;border-block:1px solid #ffffff25}
+.production-note .eyebrow{margin-bottom:10px}
+.production-note p:not(.eyebrow){font-size:15px;line-height:1.7;margin:0;color:#c7c3cb;max-width:520px}
+.production-note a{display:block;border-left:2px solid #cfbdf0;padding:5px 0 5px 22px}
+.production-note strong{font-size:17px;font-weight:500;color:#e7dcf5;display:block;margin-bottom:8px}
+.production-note span{font-size:13px;line-height:1.7;color:#c7c3cb;display:block}
+.player-credit{font-size:13px;line-height:1.5;color:#c7c3cb;margin:-5px 0 16px}
+#experience,#about,#work{scroll-margin-top:25px}
+@media(max-width:650px){.production-note{grid-template-columns:1fr;gap:22px;padding:25px 0}.work-first p{font-size:12px;max-width:260px}.caption{flex-wrap:wrap;gap:7px 15px}.caption span{text-align:left}.work-credit{font-size:11px}.production-note a{padding-left:16px}.player-credit{font-size:12px}}
