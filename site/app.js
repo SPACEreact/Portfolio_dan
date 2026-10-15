@@ -3,12 +3,12 @@ const player=document.getElementById('player');
 const status=document.getElementById('player-status');
 const original=document.getElementById('original-link');
 let works=[],activeFile='',launchButton=null;
-fetch('media.json',{cache:'no-cache'}).then(r=>{if(!r.ok)throw Error('Could not load video list');return r.json()}).then(list=>{works=list;render(list.slice(1))}).catch(()=>{const p=document.createElement('p');p.textContent='The video list could not load. Please refresh.';document.getElementById('work').append(p)});
-function render(list){const grid=document.getElementById('work');list.forEach((work,i)=>{
+fetch('media.json',{cache:'no-cache'}).then(r=>{if(!r.ok)throw Error('Could not load video list');return r.json()}).then(list=>{works=list;render(list.slice(1));document.getElementById('work').setAttribute('aria-busy','false')}).catch(()=>{const p=document.createElement('p');p.textContent='The video list could not load. Please refresh.';document.getElementById('work').append(p);document.getElementById('work').setAttribute('aria-busy','false');document.getElementById('work-count').textContent='Unavailable'});
+function render(list){const grid=document.getElementById('work');grid.replaceChildren();document.getElementById('work-count').textContent=list.length+' '+(list.length===1?'video':'videos');list.forEach((work,i)=>{
  const card=document.createElement('article');card.className='card';
  const button=document.createElement('button');button.className='video-cover';button.dataset.file=work.file;button.setAttribute('aria-label','Play '+work.title);
  const image=document.createElement('img');image.src=work.poster;image.alt=work.title+' video still';image.loading='lazy';const label=document.createElement('span');label.className='play-label';label.textContent='▶ Play video';button.append(image,label);card.append(button);
- const caption=document.createElement('div');caption.className='caption';const title=document.createElement('h2');title.textContent=work.title;const type=document.createElement('span');type.textContent=String(i+2).padStart(2,'0')+' / '+work.type;caption.append(title,type);card.append(caption);grid.append(card);
+ const caption=document.createElement('div');caption.className='caption';const title=document.createElement('h2');title.textContent=work.title;const type=document.createElement('span');type.textContent=String(works.findIndex(w=>w.file===work.file)+1).padStart(2,'0')+' / '+work.type;caption.append(title,type);card.append(caption);grid.append(card);
 })}
 async function openVideo(button){const work=works.find(w=>w.file===button.dataset.file);if(!work)return;launchButton=button;player.pause();activeFile=work.file;player.src='media/'+work.file+'.mp4';player.poster=work.poster;document.getElementById('player-title').textContent=work.title;original.href='https://drive.google.com/file/d/'+work.id+'/view';status.textContent='Loading video…';dialog.showModal();document.body.classList.add('player-open');player.load();try{await player.play()}catch(error){if(activeFile===work.file&&error.name==='NotAllowedError')status.textContent='Tap play to start.'}}
 document.addEventListener('click',e=>{const b=e.target.closest('.video-cover');if(b)openVideo(b)});
@@ -19,3 +19,15 @@ player.addEventListener('playing',()=>status.textContent='');
 player.addEventListener('waiting',()=>{if(activeFile)status.textContent='Buffering…'});
 player.addEventListener('error',()=>{if(activeFile)status.textContent='This video could not load. Try the original in Drive.'});
 player.addEventListener('ended',()=>status.textContent='');
+
+document.querySelector('.work-filters').addEventListener('click',event=>{
+ const button=event.target.closest('[data-filter]');if(!button)return;
+ document.querySelectorAll('[data-filter]').forEach(item=>item.setAttribute('aria-pressed',String(item===button)));
+ const filter=button.dataset.filter;
+ render(works.slice(1).filter(work=>filter==='all'||category(work)===filter));
+});
+function category(work){
+ if(/advertising|ad$/i.test(work.type))return 'ads';
+ if(/film/i.test(work.type))return 'films';
+ return 'experiments';
+}
