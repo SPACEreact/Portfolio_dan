@@ -10,7 +10,7 @@ function render(list){const grid=document.getElementById('work');grid.replaceChi
  const image=document.createElement('img');image.src=work.poster;image.alt=work.title+' video still';image.loading='lazy';const label=document.createElement('span');label.className='play-label';label.textContent='▶ Play video';button.append(image,label);card.append(button);
  const caption=document.createElement('div');caption.className='caption';const title=document.createElement('h2');title.textContent=work.title;const type=document.createElement('span');type.textContent=String(works.findIndex(w=>w.file===work.file)+1).padStart(2,'0')+' / '+work.type;caption.append(title,type);card.append(caption);const credit=document.createElement('p');credit.className='work-credit';credit.textContent=work.credit;card.append(credit);grid.append(card);
 })}
-async function openVideo(button){const work=works.find(w=>w.file===button.dataset.file);if(!work)return;launchButton=button;player.pause();activeFile=work.file;player.src='media/'+work.file+'.mp4';player.poster=work.poster;document.getElementById('player-title').textContent=work.title;document.getElementById('player-credit').textContent=work.credit;original.href='https://drive.google.com/file/d/'+work.id+'/view';status.textContent='Loading video…';dialog.showModal();document.body.classList.add('player-open');player.load();try{await player.play()}catch(error){if(activeFile===work.file&&error.name==='NotAllowedError')status.textContent='Tap play to start.'}}
+async function openVideo(button){const work=works.find(w=>w.file===button.dataset.file);if(!work)return;launchButton=button;player.pause();const poster=button.querySelector('img');setPlayerRatio(poster?.naturalWidth,poster?.naturalHeight);activeFile=work.file;player.src='media/'+work.file+'.mp4';player.poster=work.poster;document.getElementById('player-title').textContent=work.title;document.getElementById('player-credit').textContent=work.credit;original.href='https://drive.google.com/file/d/'+work.id+'/view';status.textContent='Loading video…';dialog.showModal();document.body.classList.add('player-open');player.load();try{await player.play()}catch(error){if(activeFile===work.file&&error.name==='NotAllowedError')status.textContent='Tap play to start.'}}
 document.addEventListener('click',e=>{const b=e.target.closest('.video-cover');if(b)openVideo(b)});
 document.getElementById('close-player').addEventListener('click',()=>dialog.close());
 dialog.addEventListener('click',e=>{if(e.target===dialog){const r=dialog.getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)dialog.close()}});
@@ -28,3 +28,10 @@ document.querySelector('.work-filters').addEventListener('click',event=>{
 });
 function category(work){return work.category;}
 
+
+function setPlayerRatio(width,height){
+ const ratio=width>0&&height>0?width/height:16/9;
+ dialog.style.setProperty('--video-ratio',String(ratio));
+}
+player.addEventListener('loadedmetadata',()=>{if(activeFile)setPlayerRatio(player.videoWidth,player.videoHeight)});
+player.addEventListener('resize',()=>{if(activeFile)setPlayerRatio(player.videoWidth,player.videoHeight)});
