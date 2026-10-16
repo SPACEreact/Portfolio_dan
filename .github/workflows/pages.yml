@@ -27,6 +27,8 @@ jobs:
         with:
           path: site/media
           key: portfolio-media-v2-${{ hashFiles('site/media.json', 'scripts/prepare_media.py') }}
+          restore-keys: |
+            portfolio-media-v2-
       - name: Prepare video tools
         run: |
           python -m pip install gdown
