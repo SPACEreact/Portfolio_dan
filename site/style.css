@@ -106,3 +106,8 @@
 .player-heading h2{min-width:0;overflow-wrap:anywhere}
 .player-bottom{flex-wrap:wrap;gap:8px 16px}
 @media(max-width:650px){#player-dialog{width:min(94vw,calc((94dvh - 200px) * var(--video-ratio,1.777778) + 28px))}}
+
+/* Let every thumbnail retain the original poster's portrait or landscape frame. */
+.grid{align-items:start}
+.video-cover{aspect-ratio:auto}
+.video-cover img{height:auto;aspect-ratio:auto}
