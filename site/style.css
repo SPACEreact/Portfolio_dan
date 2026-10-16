@@ -99,3 +99,10 @@
 .player-credit{font-size:13px;line-height:1.5;color:#c7c3cb;margin:-5px 0 16px}
 #experience,#about,#work{scroll-margin-top:25px}
 @media(max-width:650px){.production-note{grid-template-columns:1fr;gap:22px;padding:25px 0}.work-first p{font-size:12px;max-width:260px}.caption{flex-wrap:wrap;gap:7px 15px}.caption span{text-align:left}.work-credit{font-size:11px}.production-note a{padding-left:16px}.player-credit{font-size:12px}}
+
+/* Fit the dialog to the film's native orientation and available screen height. */
+#player-dialog{width:min(1100px,94vw,calc((94dvh - 200px) * var(--video-ratio,1.777778) + 40px));min-width:min(280px,94vw)}
+#player{aspect-ratio:var(--video-ratio,1.777778);height:auto;max-height:max(120px,calc(94dvh - 200px));object-fit:contain}
+.player-heading h2{min-width:0;overflow-wrap:anywhere}
+.player-bottom{flex-wrap:wrap;gap:8px 16px}
+@media(max-width:650px){#player-dialog{width:min(94vw,calc((94dvh - 200px) * var(--video-ratio,1.777778) + 28px))}}
