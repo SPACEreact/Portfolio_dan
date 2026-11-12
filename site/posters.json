@@ -1,0 +1,37 @@
+[
+  {
+    "title": "Delhi Smokes Too.",
+    "type": "Awareness poster",
+    "file": "delhi-smokes-too",
+    "src": "posters/delhi-smokes-too.webp",
+    "caption": "Without lighting one. Qutub Minar as a burning cigarette, for the air a city breathes."
+  },
+  {
+    "title": "Easy to Share.",
+    "type": "Awareness poster",
+    "file": "easy-to-share",
+    "src": "posters/easy-to-share.webp",
+    "caption": "Impossible to take back. One breath, and the joke is everywhere."
+  },
+  {
+    "title": "We Scanned It.",
+    "type": "Awareness poster",
+    "file": "we-scanned-it",
+    "src": "posters/we-scanned-it.webp",
+    "caption": "Nobody paid. A forest read as a barcode."
+  },
+  {
+    "title": "Nature Keeps Records",
+    "type": "Magazine cover",
+    "file": "nature-keeps-records",
+    "src": "posters/nature-keeps-records.webp",
+    "caption": "ROOTS, Issue 07. Tree rings as a record on the turntable."
+  },
+  {
+    "title": "City of Dreams?",
+    "type": "Concept poster",
+    "file": "city-of-dreams",
+    "src": "posters/city-of-dreams.webp",
+    "caption": "Subject: Mumbai. Result: Inconclusive. A skyline drawn by a lie detector."
+  }
+]
